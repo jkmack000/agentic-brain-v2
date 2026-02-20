@@ -22,9 +22,17 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:pypi.org)",
-      "WebFetch(domain:www.anthropic.com)"
+      "WebFetch(domain:www.anthropic.com)",
+      "mcp__brain__search_brain",
+      "mcp__brain__read_file",
+      "mcp__brain__search_linked",
+      "mcp__brain__search_path",
+      "mcp__brain__get_index",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "brain"
   ],
