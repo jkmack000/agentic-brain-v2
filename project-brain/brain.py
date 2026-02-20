@@ -356,6 +356,41 @@ def collect_all_entries(brain_root: Path) -> list[dict]:
     return entries
 
 
+LINK_INDEX = "knowledge/indexes/LINK-INDEX.md"
+
+
+def parse_link_index(brain_root: Path) -> list[dict]:
+    """Parse LINK-INDEX.md into a list of edge dicts.
+
+    Each dict has: source, target, type, hop_depth.
+    Returns empty list if LINK-INDEX.md doesn't exist.
+    """
+    link_path = brain_root / LINK_INDEX
+    if not link_path.exists():
+        return []
+    text = read_file(link_path)
+    edges = []
+    for line in text.split("\n"):
+        line = line.strip()
+        if not line or line.startswith("#") or line.startswith("<!--") or line.startswith("-") or line.startswith("|"):
+            continue
+        parts = line.split("|")
+        if len(parts) < 4:
+            continue
+        source = parts[0].strip()
+        target = parts[1].strip()
+        # Must look like file IDs
+        if not re.match(r"^[A-Z]+-\d+", source) or not re.match(r"^[A-Z]+-\d+", target):
+            continue
+        edge = {
+            "source": source,
+            "target": target,
+            "type": parts[2].strip(),
+            "hop_depth": int(parts[3].strip()) if parts[3].strip().isdigit() else -1,
+        }
+        edges.append(edge)
+    return edges
+
 
 # ---------------------------------------------------------------------------
 # Text processing — stopwords, stemming, tokenization
