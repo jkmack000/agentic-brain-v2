@@ -352,6 +352,8 @@ def collect_all_entries(brain_root: Path) -> list[dict]:
     index_dir = brain_root / "knowledge" / "indexes"
     if index_dir.exists():
         for idx_file in index_dir.glob("INDEX-*.md"):
+            if idx_file.name == "INDEX-MASTER.md":
+                continue  # already read above
             entries.extend(parse_index_entries(read_file(idx_file)))
     return entries
 
