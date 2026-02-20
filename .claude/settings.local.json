@@ -54,7 +54,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run python -c \"import os,sys,time,json; data=json.load(sys.stdin); sa=data.get('stop_hook_active',False); path='project-brain/ops/SESSION-HANDOFF.md'; ok=sa or (os.path.exists(path) and (time.time()-os.path.getmtime(path))<1800); sys.exit(0) if ok else (print('SESSION-HANDOFF.md not written in the last 30 min. Run /brain-handoff before ending.',file=sys.stderr) or sys.exit(0))\""
+            "command": "uv run python -c \"import os,sys,time,json; data=json.load(sys.stdin); sa=data.get('stop_hook_active',False); path='project-brain/ops/SESSION-HANDOFF.md'; qpath='project-brain/ops/QUEUE.md'; ok=sa or (os.path.exists(path) and (time.time()-os.path.getmtime(path))<1800); msgs=[]; (msgs.append('SESSION-HANDOFF.md not written in the last 30 min. Run /brain-handoff before ending.') if not ok else None); (msgs.append('Tip: Run /brain-checkpoint to capture undeposited knowledge before ending.') if os.path.exists(qpath) and '_Empty' in open(qpath,encoding='utf-8').read() else None); [print(m,file=sys.stderr) for m in msgs]; sys.exit(0)\""
           }
         ]
       }

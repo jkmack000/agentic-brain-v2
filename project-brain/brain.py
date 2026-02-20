@@ -754,6 +754,85 @@ def cmd_init(args):
     write_file(brain_root / "INIT.md", init_content)
     print("Created INIT.md.")
 
+    # Create QUEUE.md for pending deposits
+    queue_content = textwrap.dedent(f"""\
+    # Deposit Queue
+    <!-- type: OPS -->
+    <!-- updated: {TODAY} -->
+
+    Pending deposits that haven't been written as brain files yet. Items are added during sessions when full deposit isn't practical (e.g., mid-flow insight, context running low). Process this queue at the start of the next session or during a `/brain-checkpoint` pass.
+
+    ## Format
+
+    Each entry:
+    ```
+    ### [TYPE] Short description
+    - **Context:** Why this matters
+    - **Links:** Likely connections (file IDs)
+    - **Priority:** HIGH / MEDIUM / LOW
+    - **Added:** YYYY-MM-DD
+    ```
+
+    ## Queue
+
+    _Empty — no pending deposits._
+    """)
+    write_file(brain_root / "ops" / "QUEUE.md", queue_content)
+    print("Created ops/QUEUE.md.")
+
+    # Generate CLAUDE.md in the project root (parent of project-brain/)
+    project_root = brain_root.parent
+    claude_md_path = project_root / "CLAUDE.md"
+    claude_content = textwrap.dedent(f"""\
+    # {project_name}
+
+    ## Identity & Purpose
+
+    This is the **{project_name}** brain — a persistent knowledge base for LLM sessions. It uses a **three-space architecture** (v2):
+    - **identity/** — WHO: SPECs (design decisions) + RULEs (constraints)
+    - **knowledge/** — WHAT: LEARNs (discoveries) + CODEs (implementation docs)
+    - **ops/** — HOW: LOGs (timeline) + session state
+
+    @project-brain/INIT.md
+
+    ## Session Lifecycle
+
+    - **Start:** Check ops/SESSION-HANDOFF.md, then scan knowledge/indexes/INDEX-MASTER.md for relevant prior work
+    - **During:** Search brain before researching. Deposit findings as you go.
+    - **End:** Write ops/SESSION-HANDOFF.md + append LOG-002 timeline entry
+
+    ## Brain Reference
+
+    All brain files live in `project-brain/`. Three-space layout:
+
+    | Space | Contains | Directory |
+    |-------|----------|-----------|
+    | identity | SPECs + RULEs | `identity/` |
+    | knowledge | LEARNs + CODEs | `knowledge/` |
+    | ops | LOGs + sessions | `ops/` |
+
+    Other directories:
+    - `knowledge/indexes/` — INDEX-MASTER.md + sub-indexes
+    - `reset-files/` — Pre-built context packages
+    - `templates/` — File templates for each type
+
+    ## Brain Skills
+
+    - `/brain-search <query>` — Search fat indexes, return ranked results without opening files
+    - `/brain-deposit [TYPE] [desc]` — Guided deposit with dedup check
+    - `/brain-handoff` — Write SESSION-HANDOFF.md immediately
+    - `/brain-checkpoint` — Scan for undeposited knowledge, add to queue
+    - `/brain-status` — File counts, orphans, index health
+
+    ## Stop Rules
+
+    - Two failures on same approach → stop, explain, ask for direction.
+    - Going in circles → write SESSION-HANDOFF.md, tell the user.
+    - If you haven't searched the brain, you haven't started.
+    """)
+    write_file(claude_md_path, claude_content)
+    print("Created CLAUDE.md with Identity & Purpose section.")
+
     # Copy brain.py into the brain root
     script_path = Path(__file__).resolve()
     dest_script = brain_root / "brain.py"

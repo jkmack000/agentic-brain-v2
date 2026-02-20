@@ -79,6 +79,7 @@ Session hygiene, fat-index discipline, and ingestion dedup are enforced via `.cl
 - `/brain-search <query>` — Search fat indexes, return ranked results without opening files
 - `/brain-deposit [TYPE] [desc]` — Guided deposit with dedup check
 - `/brain-handoff` — Write SESSION-HANDOFF.md immediately
+- `/brain-checkpoint` — Scan for undeposited knowledge, add to queue
 - `/brain-status` — File counts, orphans, index health
 
 ## Stop Rules
