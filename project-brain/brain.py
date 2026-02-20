@@ -1264,6 +1264,205 @@ def cmd_ingest(args):
 
 
 # ---------------------------------------------------------------------------
+# Schema Validation
+# ---------------------------------------------------------------------------
+
+# Per-type schemas: required frontmatter fields and required sections.
+# links_min = minimum number of file IDs in the links field.
+SCHEMAS = {
+    "LEARN": {
+        "frontmatter": ["type", "tags", "created", "source", "links"],
+        "links_min": 3,
+        "sections": ["Discovery"],
+        "sections_any": [],  # at least one of these
+    },
+    "SPEC": {
+        "frontmatter": ["type", "tags", "created", "links"],
+        "links_min": 3,
+        "sections": [],
+        "sections_any": ["Problem Statement", "Architecture", "Design", "Proposal"],
+    },
+    "RULE": {
+        "frontmatter": ["type", "tags", "created", "links"],
+        "links_min": 1,
+        "sections": [],
+        "sections_any": ["Rule Statement", "Patterns", "Rule"],
+    },
+    "CODE": {
+        "frontmatter": ["type", "tags", "created", "links"],
+        "links_min": 3,
+        "sections": [],
+        "sections_any": ["Purpose", "Architecture", "Implementation"],
+    },
+    "LOG": {
+        "frontmatter": ["type", "tags", "created", "links"],
+        "links_min": 1,
+        "sections": [],
+        "sections_any": [],
+    },
+}
+
+
+def _parse_frontmatter(content: str) -> dict[str, str]:
+    """Parse HTML-comment-style frontmatter: <!-- key: value -->."""
+    fm = {}
+    for match in re.finditer(r"<!--\s*(\w[\w-]*)\s*:\s*(.*?)\s*-->", content):
+        fm[match.group(1).lower()] = match.group(2).strip()
+    return fm
+
+
+def _parse_link_ids_from_field(links_value: str) -> list[str]:
+    """Extract file IDs from a links frontmatter value.
+
+    Accepts both full IDs (LEARN-048) and abbreviated IDs (L048, S000, etc.).
+    """
+    if not links_value:
+        return []
+    ids = []
+    for part in re.split(r"[,;]+", links_value):
+        part = part.strip()
+        # Full ID format: SPEC-000, LEARN-048, etc.
+        if re.match(r"^[A-Z]+-\d+", part):
+            ids.append(part)
+        # Abbreviated format: S000, L048, C001, R001, G002
+        elif re.match(r"^[LSCRG]\d{3}", part):
+            ids.append(_expand_abbreviated_id(part))
+    return ids
+
+
+def _find_sections(content: str) -> list[str]:
+    """Return all markdown heading texts (## and ###)."""
+    return re.findall(r"^#{2,3}\s+(.+)", content, re.MULTILINE)
+
+
+def validate_file(file_path: Path, strict: bool = False) -> list[str]:
+    """Validate a single brain file against its type schema.
+
+    Returns a list of warning/error strings. Empty list = valid.
+    """
+    warnings = []
+    content = read_file(file_path)
+    fm = _parse_frontmatter(content)
+
+    # Determine file type from frontmatter or filename
+    file_type = fm.get("type", "").upper()
+    if not file_type:
+        # Try to infer from filename
+        stem = file_path.stem.split("_")[0]
+        for prefix in SCHEMAS:
+            if stem.startswith(prefix):
+                file_type = prefix
+                break
+    if not file_type:
+        warnings.append(f"Cannot determine file type for {file_path.name}")
+        return warnings
+
+    schema = SCHEMAS.get(file_type)
+    if not schema:
+        return warnings  # No schema for this type (e.g., RESET)
+
+    # Check required frontmatter fields
+    for field in schema["frontmatter"]:
+        if field not in fm or not fm[field]:
+            warnings.append(f"Missing frontmatter: <!-- {field}: ... -->")
+
+    # Check tags non-empty
+    if "tags" in fm and not fm["tags"].strip():
+        warnings.append("Tags field is empty")
+
+    # Check created is ISO date
+    if "created" in fm:
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", fm["created"]):
+            warnings.append(f"Created date not ISO format: {fm['created']}")
+
+    # Check links minimum
+    links = _parse_link_ids_from_field(fm.get("links", ""))
+    if len(links) < schema["links_min"]:
+        warnings.append(
+            f"Links: found {len(links)}, need >= {schema['links_min']}"
+        )
+
+    # Check required sections (all must be present)
+    sections = _find_sections(content)
+    section_titles = [s.strip() for s in sections]
+    for req in schema["sections"]:
+        if not any(req.lower() in s.lower() for s in section_titles):
+            warnings.append(f"Missing required section: ## {req}")
+
+    # Check sections_any (at least one must be present)
+    if schema["sections_any"]:
+        found_any = False
+        for req in schema["sections_any"]:
+            if any(req.lower() in s.lower() for s in section_titles):
+                found_any = True
+                break
+        if not found_any:
+            warnings.append(
+                f"Missing one of: {', '.join('## ' + s for s in schema['sections_any'])}"
+            )
+
+    return warnings
+
+
+def cmd_validate(args):
+    """Validate brain files against type-specific schemas.
+
+    Validates a single file, a directory, or all brain files.
+    Default mode: WARN only (exit 0). Use --strict for exit 1 on errors.
+    """
+    brain_root = require_brain_root()
+    target = args.path
+    strict = args.strict
+
+    # Collect files to validate
+    files_to_check = []
+    if target == "all":
+        for file_type, info in FILE_TYPES.items():
+            if file_type == "RESET":
+                continue
+            type_dir = brain_root / info["dir"]
+            if type_dir.exists():
+                files_to_check.extend(type_dir.glob(f"{file_type}-*.md"))
+    else:
+        target_path = Path(target)
+        if not target_path.is_absolute():
+            target_path = brain_root / target
+        if target_path.is_dir():
+            files_to_check.extend(target_path.glob("*.md"))
+        elif target_path.exists():
+            files_to_check.append(target_path)
+        else:
+            print(f"ERROR: Path not found: {target}")
+            sys.exit(1)
+
+    if not files_to_check:
+        print("No files to validate.")
+        return
+
+    total_warnings = 0
+    files_with_warnings = 0
+
+    for fp in sorted(files_to_check):
+        warnings = validate_file(fp, strict)
+        if warnings:
+            files_with_warnings += 1
+            total_warnings += len(warnings)
+            print(f"WARN {fp.name}:")
+            for w in warnings:
+                print(f"  - {w}")
+        else:
+            if not args.quiet:
+                print(f"  OK {fp.name}")
+
+    print(f"\nValidated {len(files_to_check)} files: "
+          f"{files_with_warnings} with warnings, "
+          f"{total_warnings} total warnings")
+
+    if strict and total_warnings > 0:
+        sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
 # CLI Argument Parser
 # ---------------------------------------------------------------------------
 
@@ -1302,6 +1501,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_ingest = subparsers.add_parser("ingest", help="Process source material into LTM files")
     p_ingest.add_argument("source", help="Path to source file")
 
+    # validate
+    p_validate = subparsers.add_parser("validate", help="Validate brain files against schemas")
+    p_validate.add_argument("path", nargs="?", default="all", help="File path, directory, or 'all' (default: all)")
+    p_validate.add_argument("--strict", action="store_true", help="Exit with error code on validation failures")
+    p_validate.add_argument("--quiet", "-q", action="store_true", help="Only show files with warnings")
+
     return parser
 
 
@@ -1321,6 +1526,7 @@ def main():
         "status": cmd_status,
         "reindex": cmd_reindex,
         "ingest": cmd_ingest,
+        "validate": cmd_validate,
     }
 
     commands[args.command](args)
