@@ -1,0 +1,332 @@
+{
+  "identity/RULE-001_hooks-configuration-patterns.md": {
+    "hash": "2cda37987dab223041a0a056d717a9f380151db80781d26bfcfc82a48391a071",
+    "id": "RULE-001",
+    "updated": "2026-02-20"
+  },
+  "identity/RULE-002_context-and-session-management.md": {
+    "hash": "dcedaddfff472bce61923b1e58a6d988b74dc8f273ec33be3af19c17895252b9",
+    "id": "RULE-002",
+    "updated": "2026-02-20"
+  },
+  "identity/RULE-003_skills-and-claude-md-patterns.md": {
+    "hash": "297dce2f5b3b430bdc1194a0235ebf5986aff017d18308d520923c76562e65ab",
+    "id": "RULE-003",
+    "updated": "2026-02-20"
+  },
+  "identity/RULE-004_hooks-safe-modification-workflow.md": {
+    "hash": "fa7b075c022ee2660519ee1985b692be8349692f71f9d1e9e68caa67e6574032",
+    "id": "RULE-004",
+    "updated": "2026-02-20"
+  },
+  "identity/RULE-005_user-prime-directive-and-working-style.md": {
+    "hash": "59bdd236619e5ba9bc91d3dbe8d743533aa37af4ff23809e0a1adcbe6d795f2a",
+    "id": "RULE-005",
+    "updated": "2026-02-20"
+  },
+  "identity/RULE-006_uv-venv-hygiene.md": {
+    "hash": "bc90ca934a1de864125c6e92a707c717f5dfc6e9346883620a2d763462621b25",
+    "id": "RULE-006",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-000_project-brain-architecture.md": {
+    "hash": "e83f5f8614e73f003cac38ade7a913e5ee73ae6a9ae0611f6eac98b73cfa29db",
+    "id": "SPEC-000",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-001_prover-multi-brain-architecture.md": {
+    "hash": "789ae955a51675c90c53b6265b0681fa6b5a755d98615482da0f1ff4d1431548",
+    "id": "SPEC-001",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-002_coder-brain-architecture.md": {
+    "hash": "8250ce5916362ff9533ceda735f7d6436b500df4626d6c53947cb0d0dba80444",
+    "id": "SPEC-002",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-003_quorum-capable-brain-implementation-plan.md": {
+    "hash": "61d2d9eb0c6b67d9ef13be11655836b62a3c0a6bf3d340a9be0efb8e2b9c6322",
+    "id": "SPEC-003",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-004_agent-mailbox-protocol.md": {
+    "hash": "4a6d6f20f63926a8b047dfcfd5a6d774425e0061afc9cf1cb427f7316ce5b8d9",
+    "id": "SPEC-004",
+    "updated": "2026-02-20"
+  },
+  "identity/SPEC-005_brain-v2-architecture.md": {
+    "hash": "962b869462760715d1d1faf59321eccd9245335d635964d50422278204d553e8",
+    "id": "SPEC-005",
+    "updated": "2026-02-20"
+  },
+  "knowledge/CODE-001_brain-mcp-server.md": {
+    "hash": "59f8c46eac9cff324255fdec69a52e0058d0357372b6ff0999dfa74aa462440d",
+    "id": "CODE-001",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-001_semantic-compression-context-extension.md": {
+    "hash": "aec0c425d19782848c58891be5bcbec0f3ce00620715138cc32e545fb1754897",
+    "id": "LEARN-001",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-002_competitive-landscape-memory-indexing-systems.md": {
+    "hash": "e3b7fc8db5ca716adab1d7f17d80dfbdf3de1354ec73d32ae40468bf7dbafcec",
+    "id": "LEARN-002",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-003_qualitative-research-methods-for-knowledge-systems.md": {
+    "hash": "29f601ba1218ac2b9b0b2bdb13b72894e05df51b5aba0171488133f854b8f61d",
+    "id": "LEARN-003",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-004_context-engineering-for-claude-code.md": {
+    "hash": "16ab91ccb1e4e0ea36aa353d1ec3a15c169f8652dedf8b6a58fe3d7def7a227c",
+    "id": "LEARN-004",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-005_claude-code-official-best-practices.md": {
+    "hash": "2eaeb7a36e449c87f15bb12d42b413f70f7f952507931644d141cddc6343b2f0",
+    "id": "LEARN-005",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-006_claude-code-memory-system.md": {
+    "hash": "d4575e7e1d4d174cd11011d464f3e94346f9ee858ca4cc5c683459f1bcc4cce0",
+    "id": "LEARN-006",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-007_claude-code-skills-system.md": {
+    "hash": "96ebc44be21f1991fb0ee7697e0460406e67fdf68425d72d12d829dc135551e2",
+    "id": "LEARN-007",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-008_claude-code-hooks-system.md": {
+    "hash": "81c1a130aa5e919be462f9a143970431e22c9cc7a5e76ec5bc6475340ec154a4",
+    "id": "LEARN-008",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-009_claude-code-subagents-system.md": {
+    "hash": "365b9096de71e83d6b8df7c3edd0f002d5fb63a89f5fb195256748be8120cadf",
+    "id": "LEARN-009",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-010_claude-code-architecture-internals.md": {
+    "hash": "b7463add07a08b79be8ead9ddfce98ef9dd6d5281fc65f4122c10f562896903c",
+    "id": "LEARN-010",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-011_fat-index-convergence-validation.md": {
+    "hash": "fed17557763243625b6ce65bc0e543c43f313013c4993668e12fd6905234fa38",
+    "id": "LEARN-011",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-012_brain-operational-drift-and-sync.md": {
+    "hash": "baead995f8d3be5ba3096d6a7a8797deec706de171a283f5d95cee431a01f4d4",
+    "id": "LEARN-012",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-013_claude-code-mcp-system.md": {
+    "hash": "c020e3d0d2b4de02beb0b4a8fc4f185a6fa8019bb9601e55119ff9059fa1093b",
+    "id": "LEARN-013",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-014_claude-code-agent-sdk.md": {
+    "hash": "d7ff0960509c7854a17719e9a4e01a66b14441be68afd93d3064bc6d4bf7489d",
+    "id": "LEARN-014",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-015_claude-code-agent-teams.md": {
+    "hash": "34443d0a392096fccb802813a2b1e8836692db3918708701f8507d9d60176bb8",
+    "id": "LEARN-015",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-016_claude-code-plugin-system.md": {
+    "hash": "aa09be0db423cc26333aac8094c594489e5b54f1515b6faea3fd013c01d360d8",
+    "id": "LEARN-016",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-017_claude-code-costs-settings-environment.md": {
+    "hash": "00408ddb6f4e37768cfce92bc856b291bd979e9fcd7352be13e037e23f4cfe2b",
+    "id": "LEARN-017",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-018_claude-code-common-workflows-and-patterns.md": {
+    "hash": "48534c932b726d66b4e6ae9904853dc8b4b7aa11e5b5e78f8e0ecfe4e2cd0244",
+    "id": "LEARN-018",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-019_claude-code-brain-integration-layers-1-3.md": {
+    "hash": "7751c88eba871226b4578365b363341bb7f83127d5864278bfde5c579545da24",
+    "id": "LEARN-019",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-020_mem0-dspy-llm-driven-memory-crud.md": {
+    "hash": "8b07d486c09ce5c838a2550789f09d5f0d7aef23d242f8c8e78d3793d686f390",
+    "id": "LEARN-020",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-021_langchain-langgraph-architecture-memory-retrieval.md": {
+    "hash": "abb982e54e797f6b0eade8b0538bd4a25fa21b955eed2d76efa406902d1d4f11",
+    "id": "LEARN-021",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-022_dspy-optimizers-teleprompters.md": {
+    "hash": "9bbd913afb33727d17a41b6222567b183f34796ea17d1b5a78411839a382a30a",
+    "id": "LEARN-022",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-023_qmd-local-hybrid-search-engine.md": {
+    "hash": "3f4e62594ac6f346d6c0b5658a336c86fce217ecf97ffe8e5aa06a7669d2168a",
+    "id": "LEARN-023",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-024_context-repositories-and-context-engineering-patterns.md": {
+    "hash": "f3f471ea57696f5eeb801b9c676f0c6cc25cd2dad4f49ada02adc5d6b293ea42",
+    "id": "LEARN-024",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-025_backtesting-engine-architecture-research.md": {
+    "hash": "a8e5a32838e1f8258ee102019741bf4098eba81ceb02421d7a29c73e7c02b2c3",
+    "id": "LEARN-025",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-026_inter-agent-communication-patterns.md": {
+    "hash": "7a0c818e2003a14740e90305e502fe6aed74901417a88a74c635d8aecb6124f6",
+    "id": "LEARN-026",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-027_multi-agent-orchestration-patterns.md": {
+    "hash": "6b96c32c498904ae1ce1e5296676979013b6f57f4f80e929b4e65ce9a1c3aa45",
+    "id": "LEARN-027",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-028_context7-architecture-analysis.md": {
+    "hash": "602a6d6421559de76b44cae9ddc057c9ab77ad29f6d205c4b758472d58fe15b6",
+    "id": "LEARN-028",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-029_git-worktree-workflows-for-parallel-agents.md": {
+    "hash": "ff63c258b8ca3d1ece117b810aeef62d57920ad301e2e4a6b8a1cb8761932257",
+    "id": "LEARN-029",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-030_bm25-hybrid-search-implementation-patterns.md": {
+    "hash": "c8216dde1271109b0343608f97653f4b193214f7ec56aea9cd04899300e955b5",
+    "id": "LEARN-030",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-031_file-based-knowledge-management-at-scale.md": {
+    "hash": "9c4719d692a4cfc213be3e4d25040cb303dd5c3f4c53f6e083e555738bf14009",
+    "id": "LEARN-031",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-032_quorum-sensing-framework-for-knowledge-management.md": {
+    "hash": "cbb263e8d83bbfea69e5d81bc13c01636f3ca0442a7aad48fac45ef5b33f6eaa",
+    "id": "LEARN-032",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-033_brain-graph-topology-first-backlink-analysis.md": {
+    "hash": "16590ea5a2e0fc1c4cf00e39e2f9cd925a1e165c73f03762f5e4de167d3f7c3d",
+    "id": "LEARN-033",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-034_knowledge-capture-gap-and-chat-log-review-pattern.md": {
+    "hash": "897e36fe3c8634e3a32fcd870bd3d6404b041a703f033d661983f6cb211736df",
+    "id": "LEARN-034",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-037_sandbox-agent-sdk-remote-coding-agent-execution.md": {
+    "hash": "d758aba93df8e898eb608c126c533eb19328b51f01325f82765c6abd22116ac3",
+    "id": "LEARN-037",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-038_anthropic-building-effective-agents-taxonomy.md": {
+    "hash": "a7bf7b669959c90d8be0f58cc43540b72132c046e702f739076419ca6e1630a0",
+    "id": "LEARN-038",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-039_anthropic-agent-sdk-practical-design-patterns.md": {
+    "hash": "cb0dd75f815b280ff734015cf31e2e034c18620e15d5315756ac3d1e85e80a05",
+    "id": "LEARN-039",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-040_persistent-memory-improvement-strategies.md": {
+    "hash": "b06379703e94730c13ddf34b227560780757db1b13a97fefba85b17f938cb1db",
+    "id": "LEARN-040",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-041_mcp-server-development-gotchas.md": {
+    "hash": "8e9e53370a7d2ff91644dd0c1dbc0f404f93f414b03e7c56af0ea2e4f10d0c51",
+    "id": "LEARN-041",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-042_bash-tool-windows-cross-project-gotchas.md": {
+    "hash": "92a49e707475c7ff51082a979a767be38ccd485fe61cede2800e0e8e7b86d72e",
+    "id": "LEARN-042",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-043_docling-document-parsing-library.md": {
+    "hash": "4200109f0afd05fd826388142823fb4a7515d5ddf68386a9462e6f233bbed7d7",
+    "id": "LEARN-043",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-044_brain-as-context-multiplier-not-rag.md": {
+    "hash": "dccad742d49946bcc31aa1741b82eddcbcd51392a2a0288627f6af2e9af9790f",
+    "id": "LEARN-044",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-045_checkpoint-af-vs-project-brain.md": {
+    "hash": "5c0b032ad1920ab1f6038cedcf246b4ed973a0e8fab07b58ffe9538a51b2c575",
+    "id": "LEARN-045",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-046_compressed-fat-index-format-spec.md": {
+    "hash": "1ef5b9df04ed9feae70fd4e4fcb69edcf4a5bd2026c656d2c9c540fdc9ecbd72",
+    "id": "LEARN-046",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-047_visual-ipc-cdp-inter-agent-communication.md": {
+    "hash": "c4a4eb7cf7bf4bd8facaa6a75b89d815b995644e535b7713e24da61a5dcfc888",
+    "id": "LEARN-047",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-048_succinct-hypertext-index-architecture.md": {
+    "hash": "19befb68cff8d5fd789996f2cdedbe5ec8800a430aaea7963fd174af960aaae9",
+    "id": "LEARN-048",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-049_hypertext-wildcard-correspondence.md": {
+    "hash": "d49b7f63a848aa302007a67cd52f0a0fbff490157d47539c7b7d263e2a4ff35c",
+    "id": "LEARN-049",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-050_arscontexta-agent-native-km-architecture.md": {
+    "hash": "e211b690c1b84d6d76daa3f51e3713cce7dbd443d2e9dce6e49aeae67a6e739a",
+    "id": "LEARN-050",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-051_transformer-attention-as-indexing.md": {
+    "hash": "5ed8f133bf492a7d24ffc534d36a7329e4db07dca6be0f656c6091e11e3feace",
+    "id": "LEARN-051",
+    "updated": "2026-02-20"
+  },
+  "knowledge/LEARN-052_parametric-vs-nonparametric-knowledge.md": {
+    "hash": "c7380c73ad60112ab4a8c2667108d63a4085c04e89c67793e63a35ecce4862f8",
+    "id": "LEARN-052",
+    "updated": "2026-02-20"
+  },
+  "ops/LOG-001_brain-hub-shared-repository-idea.md": {
+    "hash": "3deaf240e8c08b07cc763d6a61df9d41bf3b6ba2fa1e91795af0b7c2b511a3d3",
+    "id": "LOG-001",
+    "updated": "2026-02-20"
+  },
+  "ops/LOG-002_project-timeline.md": {
+    "hash": "0093b8d463f85affba8436007770616d164f224624a4b2aa501c127213a7bd10",
+    "id": "LOG-002",
+    "updated": "2026-02-20"
+  },
+  "ops/LOG-003_brain-to-claude-code-delivery-mechanisms.md": {
+    "hash": "59034f767c6c832a9033f64a8c182464c52b76c54380ab58f9bb667a0e264aaa",
+    "id": "LOG-003",
+    "updated": "2026-02-20"
+  }
+}

@@ -1,0 +1,211 @@
+# INDEX-MASTER
+<!-- type: INDEX -->
+<!-- updated: 2026-02-20 -->
+<!-- total-files: 66 (50 in INDEX-MASTER + 16 in INDEX-claude-code) -->
+<!-- format: compressed-v1 (LEARN-046) -->
+<!-- entry: ID|tags|→outlinks|←inlinks|summary|d:decisions|i:interface|!issues -->
+<!-- abbrev: L=LEARN S=SPEC C=CODE R=RULE G=LOG →=links ←=backlinks ∅=none d:=decisions i:=interface !=issues -->
+
+## How to Use
+1. Check ops/SESSION-HANDOFF.md first — previous session may have left unfinished work
+2. Scan entries below — each should tell you whether to open the file or skip it
+3. Sub-indexes in same directory for large clusters. Format spec: LEARN-046
+4. Use brain.py or MCP search_brain OUTSIDE context when possible
+5. Write ops/SESSION-HANDOFF.md before ending any session
+6. To render human-readable: ask LLM to expand any entry to markdown
+
+---
+
+## Sub-Indexes
+
+@SUB:claude-code|INDEX-claude-code.md|16|L004,L005,L006,L007,L008,L009,L010,L013,L014,L015,L016,L017,L018,L019,L039,G003|Claude Code internals: memory,skills,hooks,subagents,MCP,agent-SDK,plugins,costs,workflows,architecture,brain integration. Load when working on Claude Code integration. Squeeze point active (31% of brain).
+
+---
+
+## SPEC Files
+
+S000|architecture,overview,memory-system,fat-index,master-spec|→(foundational)|←S001,S003,S005,C001,L001,L002,L003,L004,L005,L006,L007,L008,L009,L010,L011,L012,L013,L014,L015,L016,L017,L018,L019,L020,L021,L022,L023,L024,L025,L030,L031,L032,L033,L034,L040,L048,L049,L050,G001,G002,G003 (40←hub)|Defines entire Project Brain LLM memory system. Fat indexing methodology, 6 file types (SPEC/CODE/RULE/LEARN/LOG/RESET), directory structure, session workflows (search→reset→work), brain-search.py CLI spec, phase plan. First app: Donchian trading bot. Root document.|d:fat index>thin index; standalone CLI>Obsidian plugin; search/work session split; typed file system; hierarchical index navigation|!none
+
+S001|prover,multi-brain,orchestrator,architecture,git-worktrees,sub-agents,coordination,backtesting|→S000,L024,L025,L026,L027,L028,L029,L031,L009,L011,L015,L037|←S002,L025,L026,L027,L028,L029,L037,L038,L040|Prover multi-brain backtesting architecture. 5 brains, each agent=own project+own brain. 4 coordination options (A:worktrees B:sub-agents C:teams D:Sandbox Agent), recommended B→A or D. CONTEXT-PACK v2+RESULT v2 inter-brain protocol (YAML frontmatter, ~750/~1500 tokens). Two-phase pipeline: VectorBT screening→Freqtrade validation→CPCV (PBO<0.5 hard gate). Git worktree layout, fan-out/fan-in orchestration, 6 guard rails as RULEs.|d:Option B first evolve to A; orchestrator-only brain writes; VectorBT+Freqtrade+CPCV stack; PBO<0.5 gate; thesis before search; code orchestration+LLM flexibility|i:CONTEXT-PACK v2 (→specialist ~750tok) + RESULT v2 (→orchestrator ~1500tok)|!5 open Qs: frontend,scope,data freshness,strategy versioning,inter-agent coordination. Teams 7x cost. Subagents can't recurse. Freqtrade crypto-focused.
+
+S003|quorum-sensing,implementation,INDEX-MASTER,brain-deposit,brain-status,backlinks,tensions,open-questions,clusters|→L032,S000,L031,L003|←L032,L033,L034|Implementation plan for 7-rule quorum sensing (L032). P0-P3 ALL COMPLETE. P0:Open Qs+Tensions+Backlinks. P1:deposit enforces min 3 links. P2:vitality scoring (inbound×3+outbound×1+tags×0.5), retirement with archive/. P3:first sub-index (claude-code 15 files).|d:P0→P3 ordering; backlinks as field; 3 tension states; sub-index by squeeze point; topological vitality; RULEs exempt low-vitality; archive/ not git-delete; vitality<2.0=review <1.0=retire|i:INDEX-MASTER gains Sub-Indexes+Open Qs+Tensions+Clusters+Backlinks. /brain-deposit gains link min+open Qs. /brain-status gains cluster+vitality reporting|!vitality formula may need threshold adjustment (tag component high floor)
+
+S005|architecture,brain-v2,three-space,link-index,pipeline,reweave,schema-enforcement,search,hypertext,knowledge-management,migration,attention,cascading-pre-filter|→S000,L048,L049,L050,L051,L031,L032,S003,L033,L030,L040,L034,L044,C001,R005,L046,L024,L009,L023,R001|←∅|Brain v2 architecture. Synthesizes 63+ brain files into next-gen design. 6 problems: link-blind search, no backward pass, hub concentration, mixed spaces, manual deposit bottleneck, monolithic index. 7 solutions: (1) three-space separation (identity/knowledge/ops — L050), (2) three-layer index as **cascading pre-filter** (fat index + link index with typed relationships + hop-depth positional encoding + cluster indexes — quantified 400x attention reduction from L051), (3) 5-phase pipeline (Deposit→Connect→Reweave→Verify→Synthesize) with fresh subagent per phase, (4) schema enforcement via PostToolUse hooks, (5) three-case search with relevance-ordered loading (within-file/cross-link/cross-chain — L048/L049 + L051 U-shaped attention), (6) auto-deposit SessionEnd hook→QUEUE.md, (7) INDEX-MASTER eviction policy — entries evict to cluster indexes when master exceeds token budget (KV-cache analogy from L051). Core insight: brain should be hypertext with search engine, not document store with index.|d:three-space invariant; link index separate from fat index; reweave bounded (1-hop, max 5 files); BFS not range query at current scale; relationship-typed links=attention heads (L051); hop-depth=positional encoding for knowledge graph; relevance-ordered loading (not ID order); INDEX-MASTER eviction to cluster indexes; three-layer cascade=quantified 12-20x token reduction; schema blocks not warns|i:search_brain(query,space), search_linked(source,target,relationship), search_path(start,end,max_hops). Token budgets: cluster ~500tok→fat ~2K→link ~1K→file read ~2-5K = ~5-8.5K total vs 100K naive. Pipeline: /brain-deposit→/brain-reweave→/brain-verify→/brain-synthesize|!5 open Qs (SPEC placement, link index format leaning pipes+hop-depth, reweave depth, IDENTITY.md vs CLAUDE.md, schema strictness). Migration churn risk. Reweave scope creep. Complexity budget vs R005.
+
+S004|multi-agent,IPC,communication,protocol,file-based,stigmergy,mailbox,Claude-Code,maker-checker,verification,testing|→S001,L026,L027,L047,L009,R005|←∅|Agent Mailbox Protocol (AMP) — lightweight file-based IPC for 2+ Claude Code instances on same machine. Each agent owns an outbox directory (write-only), reads others' outboxes. Individual .md files per message (no append corruption). 7 message types: REQUEST/RESPONSE/STATUS/HANDOFF/ACK/ERROR/DONE. Shared state via optimistic claim-file locking. Polling-based. 4 maker-checker patterns: Review Gate (no commit without ACK), Test-Driven (tests first→implement→verify), Adversarial Testing (reviewer tries to break code), Debug Ping-Pong (fresh-eyes handoff). Audit trail: every message is a permanent file — full provability chain. L027 shows 41-86.7% failure without maker-checker.|d:individual files not append; optimistic locking; agent-owned outboxes; markdown for human inspectability; reviewer independence=separate context window; audit trail=provability (R005)|i:amp/ shared dir, agents/<id>/*.md outboxes, shared/STATE.md, ROSTER.md. Messages: YAML frontmatter (from,to,seq,type,timestamp) + markdown body|!no encryption; polling wastes tool calls; no persistent background loop in Claude Code; race window on claims
+
+S002|coder-brain,prover,coding-agent,python,freqtrade,ccxt,context7,code-generation,testing,validation,guardrails|→S001,L025,L028|←∅|Coder brain architecture: Python coding agent receives designs from Architect/Planner, produces tested code for Freqtrade/CCXT/ta-lib/VectorBT. Three-tier knowledge hierarchy (brain→Context7 MCP→GitHub). Write pipeline: brain search→Context7→few-shot→SCoT→template-fill(strategies) or full-gen. Validation: AST parse→import whitelist→pytest, max 3 rounds. Security: strict import whitelist for strategies.|d:knowledge-first>guess-and-check; template-fill for IStrategy; whitelist-never-blacklist; 30s timeout+512MB; brain files>Context7|i:receives CONTEXT-PACK (implement|test|fix|refactor). Returns RESULT (files,validation,discoveries)|!7 open Qs (Architect comms,CCXT async/sync,shorts,multi-TF,VectorBT template,GitHub ingestion,exchange scope). ta-lib Windows issues.
+
+---
+
+## CODE Files
+
+C001|MCP,server,brain-search,tools,resources,prompts,stdio,BM25,implementation|→L013,L028,L030,L040,S000|←L041|Brain MCP Server design+implementation. 3 tools: search_brain (BM25 ~2K tok/query), read_file (by ID+optional section), get_index (full INDEX-MASTER). 3 resources: brain://index,file/{id},handoff. 2 prompts: search,status. stdio transport, user scope, reuses brain.py. ~4-6K/search+read vs 100K+ loading directly.|d:reuse brain.py; stdio transport; user scope; 3 tools only; section filtering for savings|i:MCP tools: search_brain(query,limit), read_file(file_id,section), get_index(). Resources: brain://index, brain://file/{id}, brain://handoff|!rank-bm25 needed at import. INDEX-MASTER approaching 10K token warning. Resource template params need verification.
+
+---
+
+## RULE Files
+
+R001|tool-pattern,hooks,configuration,settings-json,windows,matcher,stop-hook|→L008,L019|←R004|11 patterns for writing Claude Code hooks correctly. Matcher=string regex (not object), Stop hooks=command-type (prompt unreliable), stop_hook_active guard, hooks snapshot at startup (restart to test), Windows chr(92), SessionStart stdout injection. Every "never" pattern tested+confirmed broken.|!PreCompact+SessionEnd hooks untested in production
+
+R002|tool-pattern,context-window,compaction,sessions,subagents,clear,plan-mode|→L005,L010,L018|←∅|9 patterns for context window+session management. Externalize state before compaction, subagents for investigation, /clear after 2 failed corrections, "ultrathink" not a keyword (use CLAUDE_CODE_EFFORT_LEVEL), Plan Mode for read-only, --fork-session not dual-terminal.|!optimal compaction threshold still under evaluation
+
+R003|tool-pattern,skills,SKILL-md,CLAUDE-md,configuration,visibility,context-budget|→L005,L007,L018,L019|←∅|6 patterns for skills+CLAUDE.md. disable-model-invocation:true=completely invisible, skills in spaced paths fail CLI, bloated CLAUDE.md=silent rule-ignoring, @ auto-loads CLAUDE.md, 2% context budget for skill descriptions, supporting files for >500 lines.|!optimal CLAUDE.md size threshold needs measurement
+
+R004|tool-pattern,hooks,settings-json,backup,rollback,safety|→R001,L008,L019|←∅|Safe hook modification workflow: always cp backup before changes, restart, test, rollback if broken. One bad field silently kills ALL hooks.|!automating backup as hook is chicken-and-egg
+
+R005|user-preference,workflow,prioritization,scope-discipline,session-management|→R002,L034|←∅|User prime directive: organized+trackable+provable > token efficiency. Lane discipline: one-task-at-a-time, finish+commit before next, deposit tangents. Every session should produce ≥1 commit.|d:organized/trackable/provable>tokens. Smaller committed increments>ambitious multi-file.|!none
+
+R006|uv,venv,dependencies,Python,Windows,MCP,operational|→L041,C001,L030|←∅|uv venv hygiene rules. Venvs lose packages silently (recreate, antivirus, wrong cwd). 5 rules: verify deps at session start, always `uv run` not bare `python`, restart consumers after `uv sync`, pin uv version in CI, use `--directory` in MCP registration. Diagnostic checklist for Python tool failures.|d:always uv run; verify deps at session start; uv sync+restart when broken|!uv doesn't warn on venv recreate
+
+---
+
+## LEARN Files
+
+L001|context-window,compression,semantic-search,ingestion,supermemory,architecture|→S000|←L002,L003,L004,L020|6-stage semantic compression pipeline (segment→MiniLM embed→spectral cluster→BART summarize→reassemble→inject) achieving ~6:1 at 90%+ retrieval accuracy. Compression complementary to fat indexing: compression stuffs more in window, fat indexing avoids loading at all. Candidate for automating brain ingest.|!none
+
+L002|competitive-analysis,memory-systems,indexing,MCP,RAPTOR,GraphRAG,Letta,Mem0,context-engineering|→S000,L001,G001|←L004,L011,L020,L021,L022,L023,L024,L026,L028,L031,L032,L040 (12←hub)|Feb 2026 survey of LLM memory/indexing systems. Letta Context Repos independently converged on our architecture (validation). Our 44:1 compression beats automated 6-20x. Top 3 improvements: MCP server wrapper (#1), formalize consolidation as ADD/UPDATE/DELETE/NOOP (#2), git-commit every deposit (#3). Also: RAPTOR,GraphRAG,Zep,ACE,"lost in the middle" research. Brain Hub (G001) validated by MemOS+OpenMemory.|d:MCP wrapper=#1 priority after MVP. Top 10 ranked.|!all improvements deferred until Donchian bot proves concept
+
+L003|qualitative-research,triangulation,progressive-focusing,concept-mapping,methodology,Stake|→S000,L001,L002|←S003,L031,L032|6 concepts from Stake's qualitative research→brain design: triangulation (confidence levels), progressive focusing, concept mapping, member checking, progressive recoding, data storage. 3 improvements: confidence indicator, FOCUS file type, concept map overlay.|!academic framework — transferability needs practice validation
+
+<!-- L004-L010: in @SUB:claude-code -->
+
+L011|validation,architecture,fat-index,convergence,auto-memory,subagents,context-repositories|→S000,L002,L006,L009|←L024,L032,S001,L033|3 independent systems converge on fat-index architecture: Claude Code auto memory (200-line MEMORY.md+topic files), subagent persistent memory (3 scopes), Letta Context Repos. All use summary layer answering "do I need this?" without token cost. Strong external validation.|!none
+
+L012|operational,drift,sync,templates,INIT-md,multi-brain,maintenance|→S000,G002|←L031|Two edge cases: (1) template drift — brain.py init hardcoded INIT.md fallen behind manual evolution, (2) multi-brain sync — improvements don't propagate. Fix: single-source versioned template or split INIT.md.|!both worsen with more brains. Needs fix before public release.
+
+<!-- L013-L019: in @SUB:claude-code -->
+
+L020|mem0,dspy,react-agent,memory-crud,qdrant,vector-search,competitive-analysis,architecture-patterns|→L002,L001,S000|←L021,L022|Mem0 reimplementation (~300 lines) via DSPy ReAct+Qdrant. Two LLM agents: ResponseGenerator (search+save_memory bool)→UpdateMemory (ADD/UPDATE/DELETE/NOOP). 64-dim embeddings (24x smaller), category faceting. 5 brain takeaways: LLM-driven CRUD for /brain-deposit, category faceting=type system, save_memory bool for PostToolUse. Found 4 bugs.|!point-in-time Feb 2026. Repo has 4 bugs incl broken delete.
+
+L021|langchain,langgraph,deep-agents,memory,persistence,retrieval,RAG,middleware,competitive-analysis,architecture-patterns|→L002,L020,S000|←L023,L026,L030|LangChain/LangGraph ecosystem (Feb 2026). Three products: DeepAgents→LangChain Agents→LangGraph. Memory=CoALA taxonomy (semantic=LEARN/SPEC,episodic=LOG,procedural=RULE). BM25=#1 low-effort improvement, content hashing=#2. ParentDocumentRetriever converges on fat index. DeepAgents most directly competitive (virtual filesystem+auto-compression).|!DeepAgents docs incomplete. LangChain evolves rapidly.
+
+L022|dspy,optimizers,teleprompters,prompt-tuning,bootstrapping,compilation,bayesian-optimization,few-shot,fine-tuning,MIPROv2|→L020,S000,L002|←∅|Complete DSPy optimizer reference. 15 optimizers across 5 categories: few-shot,instruction,weight,combined,utility. Deep dives: BootstrapFewShot, MIPROv2 (3-stage Bayesian via Optuna), SIMBA self-reflective rules, GEPA evolutionary, InferRules. 7 brain takeaways: SIMBA rules=brain RULEs, InferRules could mine LOGs.|!DSPy evolves rapidly. SIMBA/GEPA/InferRules less battle-tested.
+
+L023|qmd,search,BM25,vector-search,reranking,hybrid-search,MCP,local-first,competitive-analysis,sqlite,node-llama-cpp|→L002,L021,L013,S000|←L028,L030|QMD (Tobi Lütke/Shopify) — local-first hybrid search for markdown. BM25(FTS5)+vector(embedding-gemma)+LLM reranker(qwen3), all on-device ~2.1GB. Novel: typed query expansion, position-aware score blending, smart signal detection, content-addressable storage (SHA-256), dynamic MCP instruction injection. Ships MCP server. "96% token savings" UNVERIFIED.|!pre-1.0, sqlite-vec alpha, 96% unverified, 74 PRs/month
+
+L024|context-repositories,context-engineering,letta,memgpt,anthropic,memory-architecture,git-worktrees,progressive-disclosure,compaction,sub-agents|→L002,L004,L005,L011,S000|←L026,L027,L029,S001,L040|Deep dive Letta Context Repos+Anthropic context engineering+MemGPT. 17 new patterns: git worktrees for agent isolation, background reflection (auto-deposit), memory defragmentation, system/ always-loaded dir, YAML frontmatter. Anthropic: attention budget n² cost, context rot=gradient not cliff, sub-agent 10-20x compression. 5-gap analysis vs our brain.|!Letta Code=TypeScript. MemGPT paper (Oct 2023) predates current Letta.
+
+L025|backtesting,architecture,event-driven,vectorized,data-pipeline,strategy-abstraction,optimization,overfitting,prover|→S001,S000|←S001,S002|Backtesting engine architecture for Prover. 7 areas: event-driven vs vectorized (hybrid recommended), data pipeline (Parquet), 4 strategy abstractions (Freqtrade DataFrame recommended for LLM), result storage, parameter optimization (3-phase: vectorized sweep→Bayesian→CPCV PBO<0.5), 6 frameworks compared, pitfalls. Recommends VectorBT(Phase 1)+Freqtrade(Phase 2).|d:Freqtrade IStrategy for AI strategies; VectorBT screening+Freqtrade validation; CPCV PBO<0.5 gate; thesis before parameter search|!NautilusTrader untested. CPCV lib needs assessment. Freqtrade crypto-focused.
+
+L026|multi-agent,IPC,communication,context-passing,message-formats,serialization,shared-memory,token-efficiency,A2A,MCP,AutoGen,CrewAI,LangGraph,Claude-Code,OpenAI-Swarm,blackboard,stigmergy|→S001,L009,L015,L024,L002,L021|←L027,L037,L038|Inter-agent communication patterns from 6+ frameworks. 9 areas: context passing (compression ratios 10-70x), message formats (A2A,AutoGen,CrewAI,LangGraph,Swarm), serialization (YAML frontmatter+MD=optimal), shared memory (blackboard=INDEX-MASTER, stigmergy=file deposits), token techniques, real implementations, MCP vs A2A, CONTEXT-PACK/RESULT v2 templates.|d:YAML frontmatter+MD for v2 formats; capability headers; LangGraph reducer pattern; token budget ~750/~1500|!A2A evolving (v0.3). 15x overhead is Anthropic's number.
+
+L027|multi-agent,orchestration,choreography,fan-out,fan-in,task-decomposition,aggregation,error-handling,context-management,LangGraph,CrewAI,AutoGen,OpenAI,prover|→S001,L009,L015,L026,L024|←L037,L038|Multi-agent orchestration from 6 frameworks. Fan-out/fan-in (137x speedup), hybrid orchestration ("code+LLM"), 4 decomposition strategies, 5 aggregation strategies, maker-checker (41-86.7% failure without), 7 error patterns (circuit breakers), 6 context strategies (isolation=#1, observation masking>summarization).|d:code orchestration+LLM flexibility; fan-out+reducers; circuit breakers; observation masking>summarization; complexity hierarchy|!APIs evolve rapidly. 41-86.7% failure stat methodology unclear.
+
+L028|context7,MCP,library-docs,architecture,search,reranking,coder-brain,upstash,vector-search|→L013,L002,L023,S001|←S002,L040,C001|Context7 (Upstash) MCP server for library docs. 33K+ libraries, 10-15 day rolling crawl. Thin client+thick backend. 2 tools: resolve-library-id (=fat-index search), get-library-docs (=brain file read with token budget). 65% token reduction+38% latency reduction by moving filtering to backend. Context7+brain complementary: "how does library work?" vs "how does OUR project use it?"|d:validates brain MCP design (two-tool pattern+token budgets+pre-enrichment). Context7 for external+brain for internal.|!backend proprietary. c7score vendor-locked (Vertex AI). 96% savings unverified.
+
+L029|git,worktrees,parallel-agents,isolation,multi-brain,concurrent,prover|→S001,L024,L018|←∅|Git worktree workflows for parallel AI agents. Mechanics, 4 real systems, concurrent safety (6-scenario risk matrix), Claude Code integration. Prover patterns: agent/<brain>/<task-id> branches, bare-repo layout, --no-ff merges. 3 brain coordination strategies→recommends orchestrator-only writes. Windows gotchas (long paths,file locking,antivirus).|d:worktrees+branch-per-agent+orchestrator-only writes; --no-ff for audit; bare-repo for many worktrees|!Claude Code worktree support=feature request #24850. Submodule support incomplete. Runtime NOT isolated.
+
+L030|BM25,search,hybrid-search,vector-search,ranking,Python,brain-py,implementation,RRF,reranking,SQLite-FTS5|→L021,L023,S000|←L040,C001|brain.py search improvement research. BM25 fundamentals (k1=1.0,b=0.4 for short docs), 6 Python libs compared (rank-bm25 adequate now, SQLite FTS5 next). Field boosting (tags 5x,ID 4x,title 3x). Hybrid: RRF (k=60) implementation. 3-phase roadmap: improve tokenizer→FTS5 at 50-100 files→hybrid at 100+. Contains ready-to-use Python code.|d:rank-bm25 adequate for current scale; FTS5=best next step; vector premature; RRF>weighted blending|!FTS5 k1/b not tunable. All recommendations for current scale (reassess at 100+).
+
+L031|zettelkasten,obsidian,logseq,knowledge-management,scaling,consolidation,graph,MOC,atomic-notes,progressive-summarization,maintenance|→S000,L002,L003,L012|←S001,S003,L032,L033,L040|File-based KM patterns for LLM memory. Zettelkasten (5 principles,40% retrieval improvement), Obsidian (MOCs,squeeze point trigger,scaling to 40K+), Logseq (outliner — we chose page model correctly). Scaling thresholds: 50-100(fat index essential)→300-500(sub-indexes)→500-1000(Evernote Effect danger)→1000+(automated search). A-MEM NeurIPS 2025 validates architecture (4th convergence). Consolidation: Forte 5-layer progressive summarization.|d:A-MEM+Letta+Claude auto memory=4th convergence. Squeeze point>arbitrary count. Evernote Effect=biggest risk.|!A-MEM academic. File size <1000tok conflicts with current practice (500-2000tok).
+
+L032|quorum-sensing,knowledge-management,biological-analogy,framework,indexing,contradictions,decay,consolidation,brain-architecture|→S000,S003,L002,L003,L011,L031|←S003,L033,L034|7 rules for quorum-capable KM from biological analogy: (1) every file emits signal (fat index), (2) min 3 links, (3) open questions as chemoattractants, (4) contradictions with 3-state tracking (OPEN/BLOCKING/RESOLVED), (5) consolidate at cluster quorum, (6) topological decay not temporal, (7) index=coordination medium. Token overhead ~10K/5%.|d:topological>temporal decay; 3-state tensions; adversarial evidence; squeeze point triggers consolidation; INDEX-MASTER=coordination medium|!framework theoretical — implementation validates (see S003)
+
+L033|graph-topology,backlinks,hub-structure,quiet-files,link-density,quorum-sensing,empirical|→L032,S003,L031,L011,S000|←∅|First empirical topology data. Hub-and-spoke: S000 (33←hub), L005 (16←secondary), L002 (11←tertiary). 8 quiet files (0 inbound): 75% of RULEs quiet (leaf-type), 12.5% LEARNs quiet (recent). Avg ~3.5 forward links, median ~2 inbound. claude-code cluster=14 files=first sub-index candidate.|!does hub structure change after consolidation? RULEs may be structurally leaf-type.
+
+L034|knowledge-capture,chat-logs,session-management,deposit-workflow,meta-insight,brain-architecture,usability|→L032,S003,L019,S000,L010|←∅|Critical knowledge capture gap: manual deposit fails at production pace. Three-layer solution: (1) deposit-as-you-go rule (.claude/rules/ — implemented, 7 triggers), (2) chat log review (~/.claude/projects/<project>/<session>.jsonl — recovery), (3) /brain-checkpoint skill (not built — would scan for undeposited knowledge). Shifts capture from "pull" to "push". ~4 items undeposited/session avg.|d:3-layer capture; deposit-as-you-go=Layer 1; chat log=Layer 2; /brain-checkpoint=Layer 3 (deferred)|!Layer 1 may slow fast sessions. Layer 3 not designed.
+
+~L035|2026-02-17|migrated to coder-brain as LEARN-001 (Freqtrade IStrategy)
+~L036|2026-02-17|migrated to coder-brain as LEARN-002 (LLM code generation)
+
+L037|sandbox-agent,multi-agent,execution,isolation,HTTP,session-persistence,MCP,agent-agnostic,prover,infrastructure|→S001,L026,L027,L014|←S001,L038|Sandbox Agent (sandboxagent.dev) — Rust CLI/SDK, universal HTTP/SSE API for coding agents in isolated sandboxes (E2B,Daytona,Docker,Vercel,Cloudflare). Agent-agnostic, session persistence (SQLite/Postgres/Rivet), replay, custom MCP tools/session, Inspector UI. Potential Option D for S001 — solves sub-agent statelessness, per-session MCP, HTTP control.|!v0.2.x, TypeScript SDK only, API may change. 4 open Qs.
+
+L038|anthropic,agents,workflows,orchestration,taxonomy,tool-design,ACI,poka-yoke,simplicity,augmented-LLM,evaluator-optimizer|→L027,L026,S001,L037|←L039|Anthropic official agent taxonomy. Workflows (predefined code) vs agents (LLM-directed). 5 workflow patterns: prompt chaining, routing, parallelization, orchestrator-worker, evaluator-optimizer. ACI=HCI/poka-yoke for tools. Critical: Anthropic spent more time on tools than prompts for SWE-bench. Simplicity first.|d:tool engineering>prompt engineering=most actionable insight|!high-level, no benchmarks. "Simplicity first" tensions with Prover multi-brain.
+
+L040|memory,context-window,MCP,embeddings,architecture,scaling,multi-agent,prompt-caching|→S000,L002,L013,L024,L028,L030,L031,S001|←C001,L051,L052|9 strategies for persistent LLM memory improvement. Triggered by blowing 200K loading all LEARNs. Three tiers: (1) better access (MCP server=highest ROI, embeddings, progressive loading, RESET packs), (2) more context (multi-agent, prompt caching, hierarchical summarization), (3) alternatives (external DB, bigger windows). Key insight: problem=access pattern not storage.|d:MCP server=highest leverage. Prompt caching=immediate cost win. Vector deferred until BM25 insufficient.|!MCP server now built (C001). Others not implemented.
+
+L041|MCP,FastMCP,stdio,development,gotchas,regex,registration,claude-code,venv,dependencies|→C001,L013,L019|←∅|8 gotchas (+2a,6a sub-gotchas) building Brain MCP Server: (1) FastMCP inside official mcp package, (2) stdout corrupts JSON-RPC silently — 2a: module-level stdout wrapping in imported libs replaces FastMCP pipe, (3) instructions field critical for discoverability, (4) can't claude mcp add from inside session, (5) regex unreliable for MD section parsing, (6) missing deps=silent server death — 6a: lazy imports turn missing deps into per-tool hangs not startup failures (venv can lose packages on recreate), (7) registration≠functional, (8) user-scope config opaque.|!#2/#2a stdout + #6/#6a dep failures most dangerous (all completely silent)
+
+L042|claude-code,bash,windows,powershell,cross-project,file-operations,gotchas|→L019,R001,L010|←∅|Two gotchas: (1) PowerShell $_ expands in bash silently (use -Name or Python os.walk), (2) file tools accept any absolute path cross-project — no cloning needed. Python>PowerShell for iteration on Windows.|!cross-drive paths (D:\,E:\) untested
+
+L043|docling,document-parsing,PDF,OCR,markdown,ingestion,MCP,IBM,tool|→L001|←∅|IBM Docling (MIT,15K★) converts PDF/DOCX/PPTX/XLSX/images/audio→MD/JSON with OCR+layout analysis. MCP server available. Heavy deps ~1-2GB first run.|i:uv add docling. Input:file path. Output:MD/JSON|!heavy deps. Overkill for plain text.
+
+L044|architecture,RAG,context-window,scaling,attention,knowledge-management,fat-index,progressive-disclosure,quorum-sensing|→S000,L001,L002,L023,L030,L040,S003|←L051,L052|Brain≠RAG—context multiplier. 6 divergences: no embeddings (BM25+LLM judgment), atomic files not chunks, bidirectional writes, topology-based retrieval, progressive disclosure, LLM-as-reranker. 3 attention levels: focus+orientation+awareness. Scales superlinearly but ceiling ~80% (lost-in-the-middle). Brain matters MORE on small context: 54-file map for 3% budget.|d:invest in topology (backlinks,clusters,tensions) not vector embeddings|!no empirical measurement. Lost-in-the-middle numbers from 2024.
+
+L045|comparison,architecture,checkpoint.af,agent-state,knowledge-persistence,external-tools,Letta|→S000,L002,L044|←∅|checkpoint.af (Go,v0.0.2,Letta state→S3/GCS/Azure/local) vs Brain (knowledge+fat-index). State persistence (what agent IS) vs knowledge persistence (what was learned). Complementary not competitive. Brain could adopt multi-backend storage; checkpoint.af could adopt fat indexing+token-aware retrieval.|d:complementary tools, not competitors|!v0.0.2, rollback/migrate unimplemented
+
+L046|fat-index,compression,token-efficiency,format-spec,INDEX-MASTER,architecture|→S000,L044,L030|←∅|Compressed fat index format spec. Pipe-delimited entries achieve ~70% token reduction (380→112 tok/entry, 3.4x density). LLM-only consumption — reverse-render to markdown on demand. Format: ID|tags|→outlinks|←inlinks|summary|d:decisions|i:interface|!issues. Abbreviated IDs (L=LEARN,S=SPEC,etc).|d:human readability not required (LLM reverse-renders on demand). 70% savings proven on 5-entry sample.|!brain.py+MCP server parsers need update for new format. Sub-index format untested at scale.
+
+L047|multi-agent,IPC,communication,CDP,Puppeteer,screenshots,sweetlink,visual,screen-scraping,collaboration|→S001,L026,L027,L037|←S004|Visual IPC via Chrome DevTools Protocol for inter-agent communication. sweetlink CLI auto-detects CDP endpoint (default 127.0.0.1:9222), captures browser tabs via Puppeteer, falls back to html2canvas. Enables Claude instances to read each other's screens using multimodal vision. Potential Option E for S001. Advantages: cross-machine, no shared FS, language-agnostic, leverages native vision. Tradeoffs: lossy (visual parsing), slower, bandwidth-limited.|d:complements structured IPC, best for monitoring/status not bulk data transfer|!OCR accuracy on dense code unmeasured. No built-in synchronization.
+
+L048|hypertext,succinct-index,FM-index,BWT,suffix-array,graph-index,pattern-matching,compressed-text-index,orthogonal-range-query,transcriptome|→S000,L030,L044,L046,L023|←L049,L051|First succinct hypertext index (Thachuk 2013). Text organized as directed graph (nodes=text, edges=valid concatenations). Three component sets: dual FM-indexes (forward+reverse, 2nH_k bits), 2D orthogonal range structure (edges as points, rectangle queries for edge crossings), succinct graph (O(1) adjacency). Dual ID system: forward (prefix rank), reverse (suffix rank), canonical. Space: 2nH_k(T)+o(logσ)+O(|E|log|E|) bits.|d:store topology twice for O(1) adjacency+range queries; dual forward/reverse indexes for prefix/suffix matching; FID for canonical ID recovery|i:forward index F (full-text dictionary), reverse index R (FM-index of T^R), 2D range P, adjacency Q, permutations Π|!γ² bottleneck unsolved for unrestricted hypertext. Reverse index replaceable with sparse suffix tree (saves nH_k, costs O(m log n)).
+
+L049|hypertext,pattern-matching,wildcard,algorithm,FM-index,dynamic-programming,prefix-free-code,graph-topology,complexity|→L048,S000,L044,L030,L032|←∅|Hypertext pattern matching generalizes wildcard text matching. Three-case decomposition: (i) within node=FM-index search, (ii) one edge=2D range query per split point O(m log|V|/loglog|V|), (iii) multi-edge=DP over γ candidate nodes checking suffix/prefix conditions via initiation+extension events O(γ²). Restricted cases: constant degree→γ logγ (balanced tree), quasi-prefix-free→γ=O(m) by pigeonhole (strongest result), path constraints→FM-index over serialized valid paths. Brain relevance: three-case maps to within-file/cross-link/cross-chain search; prefix-free=distinct summaries; γ²=hub concentration problem.|d:hypertext⊃wildcard matching (improvements transfer); quasi-prefix-free=most practical restriction; matching statistics computed incrementally O(m logσ) total|!open question: can γ dependency be eliminated for unrestricted hypertext?
+
+L050|knowledge-management,architecture,pipeline,zettelkasten,MOC,subagents,hooks,schema-validation,derivation,claude-code,plugin,backward-pass|→L031,L024,L034,L009,R001,L023,S000|←∅|Ars Contexta (Claude Code plugin, v0.8.0). 3 novel patterns: (1) invariant three-space separation (self/notes/ops — identity vs knowledge vs operational state), (2) 6 Rs pipeline extending Cornell (Record→Reduce→Reflect→Reweave→Verify→Rethink) where Reweave=backward pass updating OLD notes with NEW context, (3) derivation engine generating per-user KM from 249 research claims via 6-phase conversation. Fresh subagent per pipeline phase prevents attention degradation. Schema enforcement via PostToolUse hooks. QMD (L023) for optional semantic search.|d:three-space separation invariant across domains; backward-pass (reweave) formalized as pipeline stage; schema=single source of truth enforced by hooks; derivation>templates|i:/arscontexta:setup (6-phase onboarding), /reduce /reflect /reweave /verify /rethink (pipeline), /ralph (queue orchestrator)|!v0.8.0, 249 claims unverified, plugin marketplace availability uncertain, token-intensive setup (~20min)
+
+L051|transformer,attention,self-attention,query-key-value,indexing,soft-lookup,multi-head,positional-encoding,KV-cache,n-squared,scaling,context-window|→L044,L040,L048,L030,L001,L024,S005|←S005,L052|Transformer self-attention IS soft indexing
+
+L052|architecture,fine-tuning,parametric-memory,non-parametric-memory,RAG,knowledge-management,scaling,access-pattern,tradeoffs,cost-analysis,attention|→L051,L044,L040,L021,L002,S005,R005|←∅|Parametric vs non-parametric knowledge boundary. Fine-tuned small LLMs store knowledge in weights (implicit index); brain stores in retrievable files (explicit index). Decision depends on access pattern (extending L040): read-heavy+stable+high-volume→fine-tune; write-heavy+evolving+auditable→brain+large LLM; stable core+evolving edge→hybrid. Brain wins on: knowledge velocity (seconds vs days to update), structural reasoning (typed links lost in weights), auditability (R005 provenance), composability (any LLM), cross-domain synthesis, small data regimes. Fine-tuning wins on: latency (no retrieval), cost/query (~100x cheaper at 7B), narrow stable domains, edge deployment. n² reframing (L051): fine-tuning fixes n at training time (pays fixed cost); brain pays O(n²) proportional to loaded relevance. Hybrid future: at ~500+ files, fine-tune stable core + brain evolving edge.|d:brain optimal when knowledge changes faster than retraining cycle + auditability required; access pattern determines parametric/non-parametric boundary; brain≠RAG≠fine-tuning (three distinct strategies); hybrid at ~500+ files|!no empirical cost comparison. 500-file hybrid threshold is speculative. Fine-tuning landscape evolves rapidly (LoRA,QLoRA reduce cost).: Q=search query, K=index entries, V=stored content, softmax(QK^T/√d_k)=relevance scoring. 6 indexing parallels: (1) QKV≈BM25 search+file retrieval, (2) multi-head attention≈multi-field search (h=8 parallel index spaces over same data), (3) positional encoding≈file IDs (deterministic addressing without learned params), (4) n² scaling=fundamental reason external indexes exist (200K context→40B ops vs 5K→2.5M=400x savings), (5) KV-cache=runtime append-only index (analogous to INDEX-MASTER growing per deposit), (6) lost-in-the-middle=U-shaped attention validates progressive disclosure+importance-ordered loading. Core insight: fat index replaces O(n²) soft attention with O(n·log n) hard pre-filter. γ² bottleneck (L048/L049) structurally identical to attention's n². Compressed format (L046)=KV-cache quantization.|d:fat index justified as hard attention pre-filter; position in context matters (load by relevance not creation order); multi-field search≈multi-head attention; n² wall is brain's opportunity|i:Attention(Q,K,V)=softmax(QK^T/√d_k)·V. MultiHead=Concat(head_1..h)·W^O. PE(pos,2i)=sin(pos/10000^(2i/d))|!grounded in 2017 paper; modern architectures (GQA,MQA,sliding window) modify but don't eliminate n² core. KV-cache compression active research area.
+
+---
+
+## LOG Files
+
+G001|product-direction,brain-hub,repository,crowdsourced,meta-brain,monetization|→S000|←L002|Brain Hub concept: shared public repo for fat-indexed knowledge. Global fat index for discovery. Monetization: free browse/pull/push, paid private brains+AI scoring+curated packs.|d:concept captured, revisit after 2-3 projects prove local brain|!needs trust/reputation, global dedup, privacy, format stability
+
+<!-- G003: in @SUB:claude-code -->
+
+G002|timeline,sessions,milestones,changelog,meta|→S000|←L012|Running chronological record of all sessions+milestones+structural changes. Standard infrastructure — every brain gets one.|d:every brain gets timeline. Every session appends.|i:append-only, use entry format template in file header|!early entries reconstructed retroactively
+
+---
+
+## Open Questions
+
+|#|Question|Source|Raised|Status|
+|---|---|---|---|---|
+|1|Frontend stack preference for Prover?|S001|2026-02-16|open|
+|2|Is Prover the whole system or just the backtester?|S001|2026-02-16|open|
+|3|Data freshness — how does OHLCV data get refreshed?|S001|2026-02-16|open|
+|4|Strategy versioning — git tags? Dedicated VERSION file?|S001|2026-02-16|open|
+|5|Each agent = own project + own brain?|SESSION-HANDOFF|2026-02-17|**resolved** — in S001|
+|6|Architect/Planner → Coder brain comms?|S002|2026-02-17|open|
+|7|CCXT async vs sync for data pipelines?|S002|2026-02-17|open|
+|8|Short selling in strategy abstraction?|S002|2026-02-17|open|
+|9|Multi-timeframe alignment in IStrategy?|S002|2026-02-17|open|
+|10|VectorBT validation template?|S002|2026-02-17|open|
+|11|GitHub ingestion method for Coder brain?|S002|2026-02-17|open|
+|12|CCXT exchange scope?|S002|2026-02-17|open|
+|13|CLUSTERS auto-gen or manual?|S003|2026-02-17|**resolved** — auto by /brain-status|
+|14|Vitality threshold?|S003|2026-02-17|**resolved** — <2.0 review, <1.0 retire, RULEs exempt|
+|15|Retired files: git-delete or archive/?|S003|2026-02-17|**resolved** — archive/|
+|16|Optimal CLAUDE.md size?|R003|2026-02-15|open|
+|17|Optimal compaction threshold?|R002|2026-02-15|open|
+|18|Hub structure change after consolidation?|L033|2026-02-17|open|
+|19|Quiet vs healthy backlink count?|L033|2026-02-17|open|
+|20|Quiet RULEs: structural or problem?|L033|2026-02-17|**preliminary** — leaf-type|
+|21|Chat log location+format?|L034|2026-02-17|**resolved** — ~/.claude/projects/<proj>/<session>.jsonl|
+|22|Undeposited knowledge per session?|L034|2026-02-17|**partial** — ~4 items/session|
+|23|Agent-project coordination: shared worktrees or separate repos+CONTEXT-PACK?|S001|2026-02-17|open|
+|24|Skill files in repo for version control?|L019|2026-02-17|open|
+|25|Sandbox Agent CONTEXT-PACK via prompt API?|L037|2026-02-17|open|
+|26|Sandbox Agent HTTP latency vs native sub-agent?|L037|2026-02-17|open|
+
+---
+
+## Clusters
+
+|Cluster|Files|Avg Vitality|Squeeze?|Sub-Index?|
+|---|---|---|---|---|
+|claude-code|15|23.5|approaching|candidate|
+|architecture|8|29.9|no|no|
+|configuration|6|18.0|no|no|
+|prover|5|14.5|no|no|
+|hooks|5|24.8|no|no|
+|skills|5|25.3|no|no|
+|competitive-analysis|5|19.1|no|no|
+|MCP|5|22.4|no|no|
+
+Notes: claude-code at 15 files (31%) approaching squeeze point. prover lowest vitality (14.5). No other cluster near squeeze.
+
+---
+
+## Tensions
+
+|#|Tension|Side A|Side B|State|Notes|
+|---|---|---|---|---|---|
+|1|Temporal vs topological decay|Common practice+Grok (age-based)|L032 (connections — vitality=inbound)|RESOLVED|Topological chosen|
+|2|File size guideline|L031 (<1000tok)|Practice (500-2000tok)|OPEN|Brain files more comprehensive than atomic notes|
+|3|Consolidation trigger|L031,S000 (20-30 files,count)|L032,S003 (squeeze point,quality)|RESOLVED|Squeeze point chosen|
+|4|Brain delivery priority|G003 (rules first,low effort)|L005,L007 (skills first,high impact)|OPEN|Both valid+implemented. Which to invest more?|

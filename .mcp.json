@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "brain": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:\\agentic-brain-v2\\project-brain",
+        "run",
+        "brain-mcp-server.py"
+      ],
+      "env": {}
+    }
+  }
+}
