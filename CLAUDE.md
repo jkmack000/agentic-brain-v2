@@ -32,6 +32,10 @@ uv run project-brain/brain.py reindex
 
 Deposit/research protocol details are in `.claude/rules/brain.md`.
 
+## Verify Before Claiming Done
+
+Never claim something is complete, working, or fixed without a smoke test. Run the code, check the output, confirm the result. If you can't verify it (e.g., requires a session restart), say so explicitly. "It should work" is not verification.
+
 ## Stop Rules
 
 - Two failures on same approach → stop, explain, ask for direction.
