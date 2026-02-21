@@ -1110,3 +1110,24 @@ Running chronological record of all project sessions, milestones, ingestions, an
 - **Blockers/dead ends:**
   - ScienceDirect HTML URL 403 (paywalled) — user pasted paper text
   - DataCamp URL 403 — user pasted content, too shallow for deposit
+
+---
+
+### 2026-02-21 — Session: Insights-Driven Workflow Optimization
+- **Type:** WORK
+- **Duration:** ~1 session
+- **Summary:** Analyzed `/insights` usage report (57 sessions, 183 hours, 984 messages). Implemented workflow improvements based on empirical friction data.
+- **Key changes:**
+  - CLAUDE.md slimmed 130→40 lines (69% reduction), protocol details moved to `.claude/rules/brain.md`
+  - Added 7 new rules: session freshness, MCP debugging, skill-first, planning confirmation, INDEX-MASTER read-once, suggest-efficient-alternatives, weekly `/insights` reminder
+  - Added "verify before claiming done" rule to CLAUDE.md
+  - Enhanced `/brain-deposit` and `/brain-handoff` skills with verification + auto-commit
+  - Added SessionStart dependency pre-flight hook
+- **Files created:**
+  - LEARN-057 (insights-driven workflow improvements)
+- **Files modified:**
+  - CLAUDE.md, `.claude/rules/brain.md`, `.claude/skills/brain-deposit/SKILL.md`, `.claude/skills/brain-handoff/SKILL.md`, `.claude/settings.local.json`, INDEX-MASTER.md (count 70→71)
+  - LOG-002 (this entry)
+  - SESSION-HANDOFF.md
+- **Commits:** 6 (ba15b5e, bc109be, e88008d, 9882893, 2b716b0, + handoff)
+- **Blockers/dead ends:** None

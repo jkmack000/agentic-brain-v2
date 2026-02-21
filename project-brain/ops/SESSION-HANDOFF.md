@@ -1,49 +1,51 @@
 # SESSION-HANDOFF
-<!-- written: 2026-02-20 -->
-<!-- session-type: INGESTION + DESIGN — research ingestion, brain v2 architecture, coder brain knowledge map -->
+<!-- written: 2026-02-21 14:00 -->
+<!-- session-type: WORK — insights-driven workflow optimization -->
 <!-- trigger: user-requested handoff -->
 
 ## What Was Being Done
-Ingesting research URLs (hypertext indexing paper, graph databases, zettelkasten, claude-memory, ars contexta) and synthesizing all 63 brain files into a Brain v2 architecture design. Also produced a comprehensive coder brain knowledge map for a Python trading agent.
+Analyzed Claude Code `/insights` usage report (57 sessions, 984 messages, 183 hours) and implemented workflow improvements. Slimmed CLAUDE.md, enhanced rules and skills, added behavioral guardrails.
 
 ## Current State
 - **Status:** COMPLETED (all session goals met)
 - **What's done:**
-  - Ingested Thachuk 2013 hypertext indexing paper → LEARN-048 (index architecture), LEARN-049 (wildcard correspondence + three-case algorithm)
-  - Ingested Ars Contexta Claude Code plugin → LEARN-050 (three-space, 6 Rs pipeline, reweave, schema enforcement)
-  - Skipped 3 URLs: claude-memory (90% covered), zettelkasten.de (covered by L031), DataCamp graph databases (too shallow)
-  - Synthesized Brain v2 architecture → SPEC-005 (three-space, three-layer index, 5-phase pipeline, three-case search, schema enforcement, auto-deposit)
-  - Designed coder brain knowledge map (8 clusters, ~75-95 files) — user copied to coder-brain project
-  - INDEX-MASTER updated throughout (60→64 files, S000 backlinks 37→40)
+  - CLAUDE.md slimmed from ~130 to ~40 lines (moved protocol details to `.claude/rules/brain.md`)
+  - Added 7 new rules to `.claude/rules/brain.md`: session freshness, MCP debugging, skill-first, planning confirmation, INDEX-MASTER read-once, suggest-efficient-alternatives, weekly insights reminder
+  - Added "verify before claiming done" rule to CLAUDE.md
+  - Merged insights suggestions into `/brain-deposit` (verification + auto-commit) and `/brain-handoff` (MCP issue tracking + auto-commit)
+  - Added SessionStart dependency pre-flight hook (checks rank-bm25)
+  - Deposited LEARN-057 (insights-driven workflow improvements)
+  - All changes committed and pushed (6 commits)
 - **What's left:**
-  - Previous session's unfinished items still pending: deploy draftclaude.md as CLAUDE.md, clean up amp-staging/, commit consolidated rules + trimmed INIT.md
-  - SPEC-005 migration not started (6 phases estimated at 5-7 sessions)
+  - Previous session's unfinished items still pending: deploy draftclaude.md cleanup, clean up amp-staging/, SPEC-005 migration
+  - Previous session's undeposited: AMP failure details, context budget finding (~150-200 instruction ceiling)
+  - No new unfinished items from this session
 
 ## Uncommitted Decisions
-- None — all decisions deposited in SPEC-005
+- None — all decisions implemented and committed
 
 ## Discoveries Not Yet Deposited
-- Previous session's AMP failure details still undeposited (shared settings, env var propagation, PID issues) — noted in previous handoff, still not deposited
-- Context budget finding (~150-200 instruction ceiling, startup reduced from ~3300 to ~900 tokens) — still undeposited from previous session
+- None — LEARN-057 covers all findings from this session
+- Previous session's undeposited items still pending (AMP failure details, context budget finding)
 
 ## Open Questions
-- SPEC-005 has 5 open questions: SPEC placement (identity vs knowledge), link index format, reweave depth, IDENTITY.md vs CLAUDE.md, schema strictness
-- Previous session's open question still pending: deploy draftclaude.md as-is or further trim?
-
-## Files Added to Brain This Session
-- LEARN-048 — Succinct hypertext index architecture (Thachuk 2013)
-- LEARN-049 — Hypertext-wildcard correspondence and three-case pattern matching
-- LEARN-050 — Ars Contexta agent-native KM architecture (three-space, 6 Rs, reweave)
-- SPEC-005 — Brain v2 architecture (synthesis of all 63 brain files)
+- Are the new rules (skill-first, suggest-alternatives) too noisy in practice? Need a follow-up `/insights` run in ~1 week to assess
+- Previous SPEC-005 open questions still pending (5 items)
 
 ## Files Modified This Session
-- INDEX-MASTER.md — 4 new entries (L048, L049, L050, S005), S000 backlinks updated (37→40), file count 60→64
+- `CLAUDE.md` — slimmed to ~40 lines, added verify-before-done rule
+- `.claude/rules/brain.md` — 7 new rules added
+- `.claude/skills/brain-deposit/SKILL.md` — added verification + auto-commit steps
+- `.claude/skills/brain-handoff/SKILL.md` — added MCP issue tracking + auto-commit steps
+- `.claude/settings.local.json` — added SessionStart dep pre-flight hook
+
+## Files Added to Brain This Session
+- LEARN-057 — Insights-driven workflow improvements from usage report analysis
 
 ## Dead Ends
-- ScienceDirect HTML URL returned 403 (paywalled) — user pasted paper text directly
-- DataCamp graph database article returned 403 — user pasted content, but too shallow for deposit
+- None
 
 ## Recommended Next Session
-- **Type:** WORK
-- **Load:** SPEC-005 (brain v2 architecture), draftclaude.md
-- **First action:** Decide on deploying draftclaude.md as CLAUDE.md, then begin SPEC-005 Phase 1 (three-space directory restructure) or continue ingestion if user has more URLs
+- **Type:** WORK or INGESTION
+- **Load:** SPEC-005 (brain v2 architecture) if continuing migration, or SESSION-HANDOFF.md + INDEX-MASTER.md for new research
+- **First action:** Check if suggest-alternatives rule feels right in practice. Consider running `/insights` again in ~1 week to measure friction reduction. Previous backlog: deploy draftclaude.md, SPEC-005 Phase 1, AMP failure deposit.
