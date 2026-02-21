@@ -28,12 +28,17 @@ Write `project-brain/ops/SESSION-HANDOFF.md` immediately, capturing the current 
    - `<!-- session-type: ... -->` label
    - `<!-- trigger: ... -->` why the handoff was written
 
-4. **Append LOG-002 timeline entry:** Add a dated entry to `project-brain/ops/LOG-002_project-timeline.md` summarizing this session.
+4. **Note any MCP/env issues** encountered during the session and their resolutions (or if unresolved, flag for next session).
 
-5. **Confirm:**
+5. **Append LOG-002 timeline entry:** Add a dated entry to `project-brain/ops/LOG-002_project-timeline.md` summarizing this session.
+
+6. **Commit** with message `docs: session handoff [YYYY-MM-DD]`
+
+7. **Confirm:**
    ```
    ## Handoff Written
    - SESSION-HANDOFF.md updated
    - LOG-002 timeline entry appended
+   - Committed
    - Safe to end session
    ```

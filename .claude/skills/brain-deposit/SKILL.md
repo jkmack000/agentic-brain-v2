@@ -51,7 +51,11 @@ Create a new brain file with dedup checking and index update.
 
 9. **Update INDEX-MASTER.md:** Add a compressed-v1 fat index entry to `project-brain/knowledge/indexes/INDEX-MASTER.md` under the correct section. Update `total-files` count. Update backlinks on linked files.
 
-10. **Confirm:**
+10. **Verify** no duplicate entries or broken backlinks in INDEX-MASTER.
+
+11. **Commit** with message `brain: deposit [topic summary]`
+
+12. **Confirm:**
    ```
    ## Deposited
    - File: [path]
@@ -59,4 +63,5 @@ Create a new brain file with dedup checking and index update.
    - Open questions: [added to INDEX-MASTER / none]
    - Schema: [PASS / warnings]
    - Index: Updated (total files: N)
+   - Committed
    ```
