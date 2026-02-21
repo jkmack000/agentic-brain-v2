@@ -12,6 +12,11 @@
 - If MCP tools aren't appearing: diagnose the config, write a handoff note, and tell the user to restart the session.
 - When MCP calls hang, check for missing pip dependencies (e.g., rank-bm25) and stdout wrapping issues BEFORE assuming retry loops.
 
+## Suggest Efficient Alternatives
+- When the user does something manually that has a built-in shortcut (skill, slash command, CLI feature, keyboard shortcut), briefly mention it once. Don't nag — one suggestion per feature per session.
+- Examples: `/clear` for fresh start, `/compact` for context pressure, `/worktree` for isolation, shift+tab for plan mode, `/cost` for spending, `/context` for usage, task agents for parallelizable work, `gh` CLI for GitHub operations.
+- Once per week (roughly every 7 sessions or if it's been 5+ days), suggest running `/insights` to review workflow patterns and friction. The user discovers features by seeing them in action — surface underused capabilities when relevant.
+
 ## Planning
 - Before starting any multi-step task, briefly state your plan in 2-3 bullet points and wait for user confirmation.
 - Do not run tests, delete files, or make architectural decisions without explicit approval.
