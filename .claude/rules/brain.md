@@ -12,6 +12,10 @@
 - If MCP tools aren't appearing: diagnose the config, write a handoff note, and tell the user to restart the session.
 - When MCP calls hang, check for missing pip dependencies (e.g., rank-bm25) and stdout wrapping issues BEFORE assuming retry loops.
 
+## Planning
+- Before starting any multi-step task, briefly state your plan in 2-3 bullet points and wait for user confirmation.
+- Do not run tests, delete files, or make architectural decisions without explicit approval.
+
 ## Skill-First Rule
 - When a task matches an existing `/brain-*` skill, ALWAYS invoke that skill rather than doing it ad-hoc from general knowledge. This ensures the full checklist runs every time.
 - If unable to invoke the skill (e.g., mid-flow, context constraints), prompt the user: "This is a good time to run `/brain-deposit` (or `/brain-handoff`, etc.) — want me to invoke it?"

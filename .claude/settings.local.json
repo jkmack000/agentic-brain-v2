@@ -43,6 +43,10 @@
           {
             "type": "command",
             "command": "echo '[Brain] Project Brain detected. CLAUDE.md loaded INIT.md. Check SESSION-HANDOFF.md and INDEX-MASTER.md before starting work.'"
+          },
+          {
+            "type": "command",
+            "command": "uv --directory project-brain run python -c \"import rank_bm25; print('[Brain] Dependencies OK (rank-bm25 found)')\" 2>/dev/null || echo '[Brain] WARNING: rank-bm25 missing — run: uv --directory project-brain pip install rank-bm25'"
           }
         ]
       }
